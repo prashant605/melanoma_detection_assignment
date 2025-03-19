@@ -13,6 +13,7 @@ To build a CNN based model which can accurately detect melanoma. Melanoma is a t
 - [General Info](#general-information)
 - [Model Architecture](#model-architecture)
 - [Technologies Used](#technologies-used)
+- [Model Summary](#model-summary)
 - [Acknowledgements](#acknowledgements)
 - [Collaborators](#collaborators)
 
@@ -34,11 +35,11 @@ The break down of the final provided CNN architecture step by step:
 
 2. **Normalization**: The `Rescaling(1./255)` layer is added to normalize the pixel values of the input images. Normalization typically involves scaling the pixel values to a range between 0 and 1, which helps in stabilizing the training process and speeding up convergence.
 
-3. **Convolutional Layers**: Three convolutional layers are added sequentially using the `Conv2D` function. Each convolutional layer is followed by a rectified linear unit (ReLU) activation function, which introduces non-linearity into the model. The `padding='same'` argument ensures that the spatial dimensions of the feature maps remain the same after convolution. The number within each `Conv2D` layer (16, 32, 64) represents the number of filters or kernels used in each layer, determining the depth of the feature maps.
+3. **Convolutional Layers**: Three convolutional layers are added sequentially using the `Conv2D` function. Each convolutional layer is followed by a rectified linear unit (ReLU) activation function, which introduces non-linearity into the model. The `padding='same'` argument ensures that the spatial dimensions of the feature maps remain the same after convolution. The number within each `Conv2D` layer (32, 64, 128) represents the number of filters or kernels used in each layer, determining the depth of the feature maps.
 
 4. **Pooling Layers**: After each convolutional layer, a max-pooling layer (`MaxPooling2D`) is added to downsample the feature maps, reducing their spatial dimensions while retaining the most important information. Max-pooling helps in reducing computational complexity and controlling overfitting.
 
-5. **Dropout Layer**: A dropout layer (`Dropout`) with a dropout rate of 0.2 is added after the last max-pooling layer. Dropout is a regularization technique used to prevent overfitting by randomly dropping a fraction of the neurons during training.
+5. **Dropout Layer**: Dropout layers (`Dropout`) of 0.2, 0.25 or 0.5 are added before the max-pooling layers. Dropout is a regularization technique used to prevent overfitting by randomly dropping a fraction of the neurons during training.
 
 6. **Flatten Layer**: The `Flatten` layer is added to flatten the 2D feature maps into a 1D vector, preparing the data for input into the fully connected layers.
 
@@ -46,10 +47,27 @@ The break down of the final provided CNN architecture step by step:
 
 8. **Output Layer**: The number of neurons in the output layer is determined by the `target_labels` variable, representing the number of classes in the classification task. The output layer does not have an activation function specified, as it is followed by the loss function during training.
 
-9. **Model Compilation**: The model is compiled using the Adam optimizer (`optimizer='adam'`) and the Sparse Categorical Crossentropy loss function (`loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)`), which is suitable for multi-class classification problems. Additionally, accuracy is chosen as the evaluation metric (`metrics=['accuracy']`).
+9. **Model Compilation**: The model is compiled using the Adam optimizer (`optimizer='adamW'`) and the Sparse Categorical Crossentropy loss function (`loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)`), which is suitable for multi-class classification problems. Additionally, accuracy is chosen as the evaluation metric (`metrics=['accuracy']`).
 
-10. **Training**: The model is trained using the `fit` method with the specified number of epochs (`epochs=50`). The `ModelCheckpoint` and `EarlyStopping` callbacks are employed to monitor the validation accuracy during training. The `ModelCheckpoint` callback saves the model with the best validation accuracy, while the `EarlyStopping` callback stops training if the validation accuracy does not improve for a specified number of epochs (patience=5 in this case). These callbacks help prevent overfitting and ensure that the model converges to the best possible solution.
+10. **Training**: The model is trained using the `fit` method with the specified number of epochs. The `ModelCheckpoint` and `EarlyStopping` callbacks are employed to monitor the validation accuracy during training. The `ModelCheckpoint` callback saves the model with the best validation accuracy, while the `EarlyStopping` callback stops training if the validation accuracy does not improve for a specified number of epochs (patience=5 in this case). These callbacks help prevent overfitting and ensure that the model converges to the best possible solution.
 
+## Model Summary
+
+The break down of the final provided CNN architecture step by step:
+
+1. The final model attains an accuracy of 91% on the training set and approximately 85% on the validation set.
+
+2. The final model showcases well-balanced performance, displaying no signs of underfitting or overfitting.
+
+3. The implementation of class rebalancing has notably enhanced the model's performance across both training and validation datasets.
+
+4. The final model attains an accuracy of 91% on the training set and approximately 85% on the validation set.
+
+5. The narrow divergence between training and validation accuracies underscores the robust generalization capability of the final CNN model.
+
+6. The addition of batch normalization failed to enhance both training and validation accuracy.
+
+7. Increasing the layers in CNN architecture and increasing the number of epochs can futher improve model performace
 
 ## Technologies Used
 
